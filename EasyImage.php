@@ -28,6 +28,7 @@ class EasyImage extends CApplicationComponent
 	public $driver = 'GD'; // GD, Imagick
 	public $quality = 100;
 	public $cachePath = '/assets/'; //relative web root (default: /assets/)
+	public $subPath = 'easyimage'; //subpath to store data
 	public $cacheTime = 2592000; // 30 days
 
 	public function __construct($file = null, $driver = null)
@@ -76,7 +77,7 @@ class EasyImage extends CApplicationComponent
 		// Paths
 		$cachePath = dirname(Yii::app()->basePath) . $this->cachePath;
 		$hash = md5($file . serialize($params));
-		$subPath = 'easyimage' . DIRECTORY_SEPARATOR . $hash{0};
+		$subPath = $this->subPath . DIRECTORY_SEPARATOR . $hash{0};
 		$cacheFileName = $hash . '.' . (isset($params['type']) ? $params['type'] : pathinfo($file, PATHINFO_EXTENSION));
 		$cacheFile = $cachePath . $subPath . DIRECTORY_SEPARATOR . $cacheFileName;
 		$webCacheFile = $this->cachePath . $subPath . '/' . $cacheFileName;
