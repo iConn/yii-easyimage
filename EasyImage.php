@@ -165,6 +165,9 @@ class EasyImage extends CApplicationComponent
                         isset($value['offset_y']) ? $value['offset_y'] : NULL
                     );
                     break;
+                case 'scaleAndCrop':
+                    $this->scaleAndCrop($value['width'],$value['height']);
+                    break;
                 case 'rotate':
                     if (is_array($value)) {
                         if (!isset($value['degrees'])) {
@@ -323,6 +326,16 @@ class EasyImage extends CApplicationComponent
     public function crop($width, $height, $offset_x = NULL, $offset_y = NULL)
     {
         return $this->image()->crop($width, $height, $offset_x, $offset_y);
+    }
+
+    public function scaleAndCrop($width, $height)
+    {
+        $this->resize(
+            $width,
+            $height,
+            self::RESIZE_INVERSE
+        );
+        $this->crop($width,$height);
     }
 
     public function rotate($degrees)
