@@ -60,6 +60,9 @@ class EasyImage extends CApplicationComponent
      */
     public $retinaSupport = false;
 
+    public $newDirMode = 0775;
+    public $newFileMode = 0660;
+
     /**
      * Constructor.
      * @param string $file
@@ -242,7 +245,9 @@ class EasyImage extends CApplicationComponent
                     throw new CException('Action "' . $key . '" is not found');
             }
         }
-        return $this->save($newFile, $this->quality);
+        $result = $this->save($newFile, $this->quality);
+        @chmod($newFile, $this->newFileMode);
+        return $result;
     }
 
     /**
@@ -268,7 +273,9 @@ class EasyImage extends CApplicationComponent
 
         // Make cache dir
         if (!is_dir($cachePath)) {
-            mkdir($cachePath, 0755, true);
+            mkdir($cachePath, $this->newDirMode, true);
+            chmod(Yii::getpathOfAlias('webroot') . $this->cachePath, $this->newDirMode);
+            chmod($cachePath, $this->newDirMode);
         }
 
         // Create and caching thumbnail use params
