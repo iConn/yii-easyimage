@@ -4,7 +4,7 @@
  * @author Artur Zhdanov <zhdanovartur@gmail.com>
  * @copyright Copyright &copy; Artur Zhdanov 2013-
  * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
- * @version 1.0.2
+ * @version 1.0.4
  */
 
 Yii::setPathOfAlias('easyimage', dirname(__FILE__));
@@ -12,7 +12,6 @@ Yii::import('easyimage.drivers.*');
 
 class EasyImage extends CApplicationComponent
 {
-
     /**
      * Resizing directions
      */
@@ -60,7 +59,14 @@ class EasyImage extends CApplicationComponent
      */
     public $retinaSupport = false;
 
+    /**
+     * @var int Permissions for main cache directory and subdirectories.
+     */
     public $newDirMode = 0775;
+
+    /**
+     * @var int Permissions for cached files.
+     */
     public $newFileMode = 0660;
 
     /**
@@ -89,13 +95,16 @@ class EasyImage extends CApplicationComponent
         }
     }
 
+    /**
+     * @inheritdoc
+     */
     public function init()
     {
         // Publish "retina.js" library (http://retinajs.com/)
         if ($this->retinaSupport) {
             Yii::app()->clientScript->registerScriptFile(
                 Yii::app()->assetManager->publish(
-                    Yii::getPathOfAlias('easyimage.assets') . '/retina.js'
+                    Yii::getPathOfAlias('easyimage.assets') . '/retina.min.js'
                 ),
                 CClientScript::POS_HEAD
             );
@@ -389,5 +398,4 @@ class EasyImage extends CApplicationComponent
     {
         return $this->image()->render($type, $quality);
     }
-
 }
