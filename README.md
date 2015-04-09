@@ -62,6 +62,17 @@ Yii::app()->easyImage->thumbOf('image.jpg', array('rotate' => 90),  array('class
 Yii::app()->easyImage->thumbOf('image.png',
   array(
     'resize' => array('width' => 100, 'height' => 100),
+    'type' => 'jpg',
+    'quality' => 60,
+  ),
+  $someModel->updatedAt //cache version modifier
+);
+```
+
+// or
+Yii::app()->easyImage->thumbOf('image.png',
+  array(
+    'resize' => array('width' => 100, 'height' => 100),
     'rotate' => array('degrees' => 90),
     'sharpen' => 50,
     'background' => '#ffffff',
