@@ -67,7 +67,6 @@ Yii::app()->easyImage->thumbOf('image.png',
   ),
   $someModel->updatedAt //cache version modifier
 );
-```
 
 // or
 Yii::app()->easyImage->thumbOf('image.png',
