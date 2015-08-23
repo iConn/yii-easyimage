@@ -4,7 +4,7 @@
  * @author Artur Zhdanov <zhdanovartur@gmail.com>
  * @copyright Copyright &copy; Artur Zhdanov 2013-
  * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
- * @version 1.0.5
+ * @version 1.0.6
  */
 
 Yii::setPathOfAlias('easyimage', dirname(__FILE__));
@@ -161,9 +161,9 @@ class EasyImage extends CApplicationComponent
             switch ($key) {
                 case 'resize':
                     $this->resize(
-                        isset($value['width']) ? $value['width'] : NULL,
-                        isset($value['height']) ? $value['height'] : NULL,
-                        isset($value['master']) ? $value['master'] : NULL
+                        isset($value['width']) ? $value['width'] : null,
+                        isset($value['height']) ? $value['height'] : null,
+                        isset($value['master']) ? $value['master'] : null
                     );
                     break;
                 case 'crop':
@@ -173,8 +173,8 @@ class EasyImage extends CApplicationComponent
                     $this->crop(
                         $value['width'],
                         $value['height'],
-                        isset($value['offset_x']) ? $value['offset_x'] : NULL,
-                        isset($value['offset_y']) ? $value['offset_y'] : NULL
+                        isset($value['offset_x']) ? $value['offset_x'] : null,
+                        isset($value['offset_y']) ? $value['offset_y'] : null
                     );
                     break;
                 case 'scaleAndCrop':
@@ -212,17 +212,17 @@ class EasyImage extends CApplicationComponent
                     break;
                 case 'reflection':
                     $this->reflection(
-                        isset($value['height']) ? $value['height'] : NULL,
+                        isset($value['height']) ? $value['height'] : null,
                         isset($value['opacity']) ? $value['opacity'] : 100,
-                        isset($value['fade_in']) ? $value['fade_in'] : FALSE
+                        isset($value['fade_in']) ? $value['fade_in'] : false
                     );
                     break;
                 case 'watermark':
                     if (is_array($value)) {
                         $this->watermark(
-                            isset($value['watermark']) ? $value['watermark'] : NULL,
-                            isset($value['offset_x']) ? $value['offset_x'] : NULL,
-                            isset($value['offset_y']) ? $value['offset_y'] : NULL,
+                            isset($value['watermark']) ? $value['watermark'] : null,
+                            isset($value['offset_x']) ? $value['offset_x'] : null,
+                            isset($value['offset_y']) ? $value['offset_y'] : null,
                             isset($value['opacity']) ? $value['opacity'] : 100
                         );
                     } else {
@@ -336,12 +336,12 @@ class EasyImage extends CApplicationComponent
      * because it uses a design pattern "factory".
      */
 
-    public function resize($width = NULL, $height = NULL, $master = NULL)
+    public function resize($width = null, $height = null, $master = null)
     {
         return $this->image()->resize($width, $height, $master);
     }
 
-    public function crop($width, $height, $offset_x = NULL, $offset_y = NULL)
+    public function crop($width, $height, $offset_x = null, $offset_y = null)
     {
         return $this->image()->crop($width, $height, $offset_x, $offset_y);
     }
@@ -371,12 +371,12 @@ class EasyImage extends CApplicationComponent
         return $this->image()->sharpen($amount);
     }
 
-    public function reflection($height = NULL, $opacity = 100, $fade_in = FALSE)
+    public function reflection($height = null, $opacity = 100, $fade_in = false)
     {
         return $this->image()->reflection($height, $opacity, $fade_in);
     }
 
-    public function watermark($watermark, $offset_x = NULL, $offset_y = NULL, $opacity = 100)
+    public function watermark($watermark, $offset_x = null, $offset_y = null, $opacity = 100)
     {
         if ($watermark instanceof EasyImage) {
             $watermark = $watermark->image();
@@ -391,12 +391,12 @@ class EasyImage extends CApplicationComponent
         return $this->image()->background($color, $opacity);
     }
 
-    public function save($file = NULL, $quality = 100)
+    public function save($file = null, $quality = 100)
     {
         return $this->image()->save($file, $quality);
     }
 
-    public function render($type = NULL, $quality = 100)
+    public function render($type = null, $quality = 100)
     {
         return $this->image()->render($type, $quality);
     }
