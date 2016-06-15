@@ -41,16 +41,20 @@ class Image
 	 * @return  Image
 	 * @uses    Image::$default_driver
 	 */
-	public static function factory($file, $driver = NULL)
+	public static function factory($file, $driver = NULL, $useProgressiveJpeg = false)
 	{
 		if ($driver === NULL) {
 			// Use the default driver
 			$driver = Image::$default_driver;
 		}
 
-		// Set the class name
-		$class = 'Image_' . $driver;
-		return new $class($file);
+		if ($driver === 'GD') {
+			return new Image_GD($file, $useProgressiveJpeg);
+		}
+		else {
+			$class = 'Image_' . $driver;
+			return new $class($file);
+		}
 	}
 
 	/**

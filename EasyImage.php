@@ -70,14 +70,21 @@ class EasyImage extends CApplicationComponent
     public $newFileMode = 0660;
 
     /**
+     * @var  boolean  use progressive jpeg instread of baseline. This is used in GD only.
+     */
+    public $isProgressiveJpeg = false;
+
+    /**
      * Constructor.
      * @param string $file
      * @param string $driver
+     * @param boolean $useProgressiveJpeg
      */
-    public function __construct($file = null, $driver = null)
+    public function __construct($file = null, $driver = null, $useProgressiveJpeg = false)
     {
+        $this->isProgressiveJpeg = $useProgressiveJpeg;
         if (is_file($file)) {
-            return $this->_image = Image::factory($this->detectPath($file), $driver ? $driver : $this->driver);
+            return $this->_image = Image::factory($this->detectPath($file), $driver ? $driver : $this->driver, $useProgressiveJpeg);
         }
     }
 
@@ -155,7 +162,7 @@ class EasyImage extends CApplicationComponent
             if (!is_file($file)) {
                 return false;
             }
-            $this->_image = Image::factory($this->detectPath($file), $this->driver);
+            $this->_image = Image::factory($this->detectPath($file), $this->driver, $this->isProgressiveJpeg);
         }
         foreach ($params as $key => $value) {
             switch ($key) {
@@ -292,7 +299,7 @@ class EasyImage extends CApplicationComponent
         if (!is_file($file)) {
             return false;
         }
-        $image = Image::factory($this->detectPath($file), $this->driver);
+        $image = Image::factory($this->detectPath($file), $this->driver, $this->isProgressiveJpeg);
         $originWidth = $image->width;
         $originHeight = $image->height;
         $result = $this->_doThumbOf($image, $cacheFile, $params);
