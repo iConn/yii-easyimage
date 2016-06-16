@@ -4,7 +4,7 @@
  * @author Artur Zhdanov <zhdanovartur@gmail.com>
  * @copyright Copyright &copy; Artur Zhdanov 2013-
  * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
- * @version 1.0.6
+ * @version 1.0.7
  */
 
 Yii::setPathOfAlias('easyimage', dirname(__FILE__));

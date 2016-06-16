@@ -26,6 +26,7 @@ Add the following to your config file `components` section:
     //'cachePath' => '/assets/easyimage/',
     //'cacheTime' => 2592000,
     //'retinaSupport' => false,
+    //'isProgressiveJpeg' => false,
   ),
 ```
 and the following to `import` section:
