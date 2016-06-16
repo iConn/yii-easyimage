@@ -50,14 +50,17 @@ class Image_GD extends Image
 	// Function name to open Image
 	protected $_create_function;
 
+	protected $_isProgressiveJpeg = false;
+
 	/**
 	 * Runs [Image_GD::check] and loads the image.
 	 *
-	 * @param   string  $file  image file path
+	 * @param   string  $file                image file path
+	 * @param   boolean $useProgressiveJpeg  use progressive JPEG format
 	 * @return  void
 	 * @throws  СException
 	 */
-	public function __construct($file)
+	public function __construct($file, $useProgressiveJpeg = false)
 	{
 		if (!Image_GD::$_checked) {
 			// Run the install check
@@ -70,6 +73,7 @@ class Image_GD extends Image
 		switch ($this->type) {
 			case IMAGETYPE_JPEG:
 				$create = 'imagecreatefromjpeg';
+				$this->_isProgressiveJpeg = $useProgressiveJpeg;
 				break;
 			case IMAGETYPE_GIF:
 				$create = 'imagecreatefromgif';
@@ -116,6 +120,8 @@ class Image_GD extends Image
 
 			// Open the temporary image
 			$this->_image = $create($this->file);
+
+			$this->_set_interlacing($this->_image);
 
 			// Preserve transparency when saving
 			imagesavealpha($this->_image, TRUE);
@@ -578,6 +584,23 @@ class Image_GD extends Image
 	}
 
 	/**
+	 * Sets an interlace mode.
+	 *
+	 * @param resource $image Image to apply interlacing.
+	 * 
+	 * This is useful for creating progressive jpeg images.
+	 */
+	protected function _set_interlacing($image)
+	{
+		if ($this->_isProgressiveJpeg) {
+			imageinterlace($image, 1);
+		}
+		else {
+			imageinterlace($image, 0);	
+		}
+	}
+
+	/**
 	 * Create an empty image with the given width and height.
 	 *
 	 * @param   integer   $width   image width
@@ -588,6 +611,7 @@ class Image_GD extends Image
 	{
 		// Create an empty image
 		$image = imagecreatetruecolor($width, $height);
+		$this->_set_interlacing($image);
 
 		// Do not apply alpha blending
 		imagealphablending($image, FALSE);
