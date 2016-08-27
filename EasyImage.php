@@ -62,12 +62,12 @@ class EasyImage extends CApplicationComponent
     /**
      * @var int Permissions for main cache directory and subdirectories.
      */
-    public $newDirMode = 0775;
+    public $newDirMode = 0754;
 
     /**
      * @var int Permissions for cached files.
      */
-    public $newFileMode = 0660;
+    public $newFileMode = 0644;
 
     /**
      * @var  boolean  use progressive jpeg instread of baseline. This is used in GD only.
