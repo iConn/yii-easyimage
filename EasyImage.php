@@ -276,7 +276,7 @@ class EasyImage extends CApplicationComponent
     public function thumbSrcOf($file, $params = array(), $hash = null)
     {
         // Paths
-        $hash = md5($file . serialize($params) . (string)$hash);
+        $hash = sha1($file . serialize($params) . (string)$hash);
         $cachePath = Yii::getpathOfAlias('webroot') . $this->cachePath . $hash{0};
         $cacheFileExt = isset($params['type']) ? $params['type'] : pathinfo($file, PATHINFO_EXTENSION);
         $cacheFileName = $hash . '.' . $cacheFileExt;
