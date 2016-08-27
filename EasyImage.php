@@ -277,7 +277,8 @@ class EasyImage extends CApplicationComponent
     {
         // Paths
         $hash = md5($file . serialize($params) . (string)$hash);
-        $cachePath = Yii::getpathOfAlias('webroot') . $this->cachePath . $hash{0};
+        $filePath = Yii::getPathOfAlias('webroot') . $file;
+        $cachePath = Yii::getPathOfAlias('webroot') . $this->cachePath . $hash{0};
         $cacheFileExt = isset($params['type']) ? $params['type'] : pathinfo($file, PATHINFO_EXTENSION);
         $cacheFileName = $hash . '.' . $cacheFileExt;
         $cacheFile = $cachePath . DIRECTORY_SEPARATOR . $cacheFileName;
@@ -296,7 +297,7 @@ class EasyImage extends CApplicationComponent
         }
 
         // Create and caching thumbnail use params
-        if (!is_file($file)) {
+        if (!is_file($filePath)) {
             return false;
         }
         $image = Image::factory($this->detectPath($file), $this->driver, $this->isProgressiveJpeg);
